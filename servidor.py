@@ -6,7 +6,7 @@ import factorial_pb2_grpc
 import os
 
 
-class FactorialServicer(factorial_pb2_grpc.FactorialServicer):
+class FactorialServicer(factorial_pb2_grpc.FactorialServiceServicer):  # Usar el nombre correcto de la clase
     def Compute(self, request, context):
         number = request.number
         result = 1
@@ -16,12 +16,12 @@ class FactorialServicer(factorial_pb2_grpc.FactorialServicer):
 
 
 def serve():
-    # Usa el puerto de la variable de entorno o el 50051 por defecto
-    port = os.getenv('PORT', '50051')
+    port = os.getenv('PORT', '50051')  # Usar el puerto de la variable de entorno
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    factorial_pb2_grpc.add_FactorialServicer_to_server(FactorialServicer(), server)
 
-    # Escuchar en 0.0.0.0 para permitir acceso externo
+    # Cambiado para usar el nombre correcto de la función
+    factorial_pb2_grpc.add_FactorialServiceServicer_to_server(FactorialServicer(), server)
+
     server.add_insecure_port(f'0.0.0.0:{port}')
     server.start()
     print(f"Server is running on port {port}...")
